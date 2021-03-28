@@ -107,7 +107,7 @@ public class TestSelector {
         Assert.assertTrue(attribute2.isDisplayed());
 
         //[attribute=value]
-        WebElement attribute3 = driver.findElement(By.cssSelector("data-hh-tab-id='searchVacancy'"));
+        WebElement attribute3 = driver.findElement(By.cssSelector("[data-hh-tab-id='searchVacancy']"));
         WebElement attribute4 = driver.findElement(By.cssSelector("[data-qa='search-button']"));
 
         //[attribute~=value]
