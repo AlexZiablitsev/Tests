@@ -5,16 +5,16 @@ import core.BrowserService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class ProjectsPage extends BasePage {
-    private static String END_POINT = "index.php?/admin/projects/overview";
-    private static final By listProjectsBy = By.id("content-inner");
+public class AddProjectPage extends BasePage {
+    private static String END_POINT = "index.php?/admin/projects/add/1";
+    private static final By tableBy = By.cssSelector("div+div.table");
 
-    public ProjectsPage(BrowserService browserService, boolean openPageByUrl) {
+    public AddProjectPage(BrowserService browserService, boolean openPageByUrl) {
         super(browserService, openPageByUrl);
     }
 
-    public WebElement getListProjects() {
-        return driver.findElement(listProjectsBy);
+    public WebElement getTable() {
+        return driver.findElement(tableBy);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ProjectsPage extends BasePage {
     @Override
     public boolean isPageOpen() {
         try {
-            return getListProjects().isDisplayed();
+            return getTable().isDisplayed();
         } catch (Exception ex) {
             return false;
         }

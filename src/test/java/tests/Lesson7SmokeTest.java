@@ -1,12 +1,13 @@
 package tests;
 
 import Steps.LoginSteps;
+import Steps.ProjectSteps;
 import core.BrowserService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.AddProject;
+import pages.AddProjectPage;
 import pages.DashboardPage;
 import pages.LoginPage;
 import pages.ProjectsPage;
@@ -30,8 +31,9 @@ public class Lesson7SmokeTest {
 
         LoginSteps loginSteps = new LoginSteps(browserService);
         loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-
         Assert.assertEquals(driver.getTitle(), "All Projects - TestRail");
+
+
         driver.quit();
     }
 
@@ -55,18 +57,6 @@ public class Lesson7SmokeTest {
         driver.quit();
     }
 
-//    @Test
-//    public void AddNewProjectTes() {
-//        BrowserService browserService = new BrowserService();
-//        WebDriver driver = browserService.getDriver();
-//
-//        LoginSteps loginSteps = new LoginSteps(browserService);
-//        DashboardPage dashboardPage = loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-//        dashboardPage.getSidebarProjectsAddButton().click();
-//
-//        driver.quit();
-//    }
-
     @Test
     public void AddNewProjectType1() {
         BrowserService browserService = new BrowserService();
@@ -74,68 +64,67 @@ public class Lesson7SmokeTest {
 
         LoginSteps loginSteps = new LoginSteps(browserService);
         DashboardPage dashboardPage = loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-        Assert.assertEquals(dashboardPage.isPageOpen(), true);//провера залогинились или нет
+        AddProjectPage addProject = new AddProjectPage(browserService, true);
 
-        AddProject addProject = new AddProject(browserService, true);
-        Assert.assertEquals(addProject.isPageOpen(),true);//проверка открылась страница или нет
-
-        addProject.addProjectType1();
-        Assert.assertEquals(addProject.getMessageSuccessBy(), "Successfully added the new project.");
+        ProjectSteps project1 = new ProjectSteps(browserService);
+        project1.addProjectType1("AZjablicev_01", "lalaal");
+        Assert.assertEquals(project1.getMessageSuccessBy(), "Successfully added the new project.");
         Assert.assertEquals(driver.findElement(By.xpath("//*[contains(text(),'AZjablicev_01')]")).getText(), "AZjablicev_01");
 
 
         driver.quit();
-    }@Test
+    }
+
+    @Test
     public void AddNewProjectType2() {
         BrowserService browserService = new BrowserService();
         WebDriver driver = browserService.getDriver();
 
         LoginSteps loginSteps = new LoginSteps(browserService);
         DashboardPage dashboardPage = loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-        Assert.assertEquals(dashboardPage.isPageOpen(), true);//провера залогинились или нет
+        AddProjectPage addProject = new AddProjectPage(browserService, true);
 
-        AddProject addProject = new AddProject(browserService, true);
-        Assert.assertEquals(addProject.isPageOpen(),true);//проверка открылась страница или нет
-
-        addProject.addProjectType2();
-        Assert.assertEquals(addProject.getMessageSuccessBy(), "Successfully added the new project.");
+        ProjectSteps project2 = new ProjectSteps(browserService);
+        project2.addProjectType2("AZjablicev_02", "lalalala");
+        Assert.assertEquals(project2.getMessageSuccessBy(), "Successfully added the new project.");
         Assert.assertEquals(driver.findElement(By.xpath("//*[contains(text(),'AZjablicev_02')]")).getText(), "AZjablicev_02");
 
 
         driver.quit();
-    }@Test
+    }
+
+    @Test
     public void AddNewProjectType3() {
         BrowserService browserService = new BrowserService();
         WebDriver driver = browserService.getDriver();
 
         LoginSteps loginSteps = new LoginSteps(browserService);
         DashboardPage dashboardPage = loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-        Assert.assertEquals(dashboardPage.isPageOpen(), true);//провера залогинились или нет
+        AddProjectPage addProject = new AddProjectPage(browserService, true);
 
-        AddProject addProject = new AddProject(browserService, true);
-        Assert.assertEquals(addProject.isPageOpen(),true);//проверка открылась страница или нет
-
-        addProject.addProjectType3();
-        Assert.assertEquals(addProject.getMessageSuccessBy(), "Successfully added the new project.");
+        ProjectSteps project3 = new ProjectSteps(browserService);
+        project3.addProjectType3("AZjablicev_03", "ulalaulala");
+        Assert.assertEquals(project3.getMessageSuccessBy(), "Successfully added the new project.");
         Assert.assertEquals(driver.findElement(By.xpath("//*[contains(text(),'AZjablicev_03')]")).getText(), "AZjablicev_03");
 
 
         driver.quit();
     }
 
-//    @Test
-//    public void DeleteProjects(){
-//        BrowserService browserService = new BrowserService();
-//        WebDriver driver = browserService.getDriver();
-//
-//        LoginSteps loginSteps = new LoginSteps(browserService);
-//        DashboardPage dashboardPage = loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-//        Assert.assertEquals(dashboardPage.isPageOpen(), true);//провера залогинились или нет
-//
-//        ProjectsPage projectsPage = new ProjectsPage(browserService,true);
-//        projectsPage.deleteProjects("AZjablicev");
-//        Assert.assertFalse(projectsPage.getCountsProjects());
-//
-//        driver.quit();
-//    }
+    @Test
+    public void DeleteProjects() {
+        BrowserService browserService = new BrowserService();
+        WebDriver driver = browserService.getDriver();
+
+        LoginSteps loginSteps = new LoginSteps(browserService);
+        DashboardPage dashboardPage = loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
+        ProjectsPage projectsPage = new ProjectsPage(browserService, true);
+
+        ProjectSteps projectSteps = new ProjectSteps(browserService);
+        projectSteps.deleteProjects("AZjablicev");
+        Assert.assertFalse(projectSteps.findMyProjectsBy());
+
+
+        driver.quit();
+    }
 }
