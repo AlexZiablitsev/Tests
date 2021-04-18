@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Lesson10tests">
+    <parameter name="email" value="atrostyanko+0401@gmail.com"></parameter>
+    <parameter name="password" value="QqtRK9elseEfAk6ilYcJ"></parameter>
+    <parameter name="incorrectEmail" value="test@gmail.com"></parameter>
+    <parameter name="incorrectPassword" value="qweqwe"></parameter>
+    <parameter name="emptyEmail" value=""></parameter>
+    <parameter name="emptyPassword" value=""></parameter>
+    <test name="test">
+        <classes>
+            <class name="tests.TestsLesson10"></class>
+        </classes>
+    </test>
+</suite>
