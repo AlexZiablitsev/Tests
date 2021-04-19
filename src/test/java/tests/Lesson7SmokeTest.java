@@ -64,48 +64,13 @@ public class Lesson7SmokeTest {
 
         LoginSteps loginSteps = new LoginSteps(browserService);
         DashboardPage dashboardPage = loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-        AddProjectPage addProject = new AddProjectPage(browserService, true);
 
         ProjectSteps project1 = new ProjectSteps(browserService);
-        project1.addProjectType1("AZjablicev_01", "lalaal");
-        Assert.assertEquals(project1.getMessageSuccessBy(), "Successfully added the new project.");
-        Assert.assertEquals(driver.findElement(By.xpath("//*[contains(text(),'AZjablicev_01')]")).getText(), "AZjablicev_01");
+        project1.addProject("AZjablicev_01", "lalaal",true,2);
 
 
-        driver.quit();
-    }
-
-    @Test
-    public void AddNewProjectType2() {
-        BrowserService browserService = new BrowserService();
-        WebDriver driver = browserService.getDriver();
-
-        LoginSteps loginSteps = new LoginSteps(browserService);
-        DashboardPage dashboardPage = loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-        AddProjectPage addProject = new AddProjectPage(browserService, true);
-
-        ProjectSteps project2 = new ProjectSteps(browserService);
-        project2.addProjectType2("AZjablicev_02", "lalalala");
-        Assert.assertEquals(project2.getMessageSuccessBy(), "Successfully added the new project.");
-        Assert.assertEquals(driver.findElement(By.xpath("//*[contains(text(),'AZjablicev_02')]")).getText(), "AZjablicev_02");
-
-
-        driver.quit();
-    }
-
-    @Test
-    public void AddNewProjectType3() {
-        BrowserService browserService = new BrowserService();
-        WebDriver driver = browserService.getDriver();
-
-        LoginSteps loginSteps = new LoginSteps(browserService);
-        DashboardPage dashboardPage = loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-        AddProjectPage addProject = new AddProjectPage(browserService, true);
-
-        ProjectSteps project3 = new ProjectSteps(browserService);
-        project3.addProjectType3("AZjablicev_03", "ulalaulala");
-        Assert.assertEquals(project3.getMessageSuccessBy(), "Successfully added the new project.");
-        Assert.assertEquals(driver.findElement(By.xpath("//*[contains(text(),'AZjablicev_03')]")).getText(), "AZjablicev_03");
+        Assert.assertEquals(project1.messageSuccess(), "Successfully added the new project.");
+        Assert.assertTrue(project1.findMyProject("AZjablicev_01"));
 
 
         driver.quit();
@@ -118,12 +83,11 @@ public class Lesson7SmokeTest {
 
         LoginSteps loginSteps = new LoginSteps(browserService);
         DashboardPage dashboardPage = loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-        ProjectsPage projectsPage = new ProjectsPage(browserService, true);
+
 
         ProjectSteps projectSteps = new ProjectSteps(browserService);
         projectSteps.deleteProjects("AZjablicev");
-        Assert.assertFalse(projectSteps.findMyProjectsBy());
-
+       Assert.assertFalse(projectSteps.findMyProject("AZjablicev"));
 
         driver.quit();
     }
