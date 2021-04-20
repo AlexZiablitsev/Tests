@@ -9,8 +9,6 @@ import utils.Waits;
 
 import java.util.List;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-
 public class DynamicControlsSteps extends BaseStep {
     public DynamicControlsSteps(BrowsersService browsersService) {
         super(browsersService);
@@ -30,7 +28,6 @@ public class DynamicControlsSteps extends BaseStep {
         dynamicControlsPage.getEnableButton().click();
         Waits wait = new Waits(browsersService.getDriver());
         WebElement element = wait.waitForVisibility(By.xpath("//*[@id='input-example']//child::p"));
-
     }
 
     public WebElement getCheckboxMessage() {
@@ -38,11 +35,12 @@ public class DynamicControlsSteps extends BaseStep {
         return dynamicControlsPage.getCheckboxMessage();
     }
 
-    public WebElement getCheckbox(){
+    public WebElement getCheckbox() {
         DynamicControlsPage dynamicControlsPage = new DynamicControlsPage(browsersService, false);
         return dynamicControlsPage.getCheckbox();
     }
-    public List<WebElement> getCountCheckbox(){
+
+    public List<WebElement> getCountCheckbox() {
         DynamicControlsPage dynamicControlsPage = new DynamicControlsPage(browsersService, false);
         return dynamicControlsPage.getCountCheckbox();
     }

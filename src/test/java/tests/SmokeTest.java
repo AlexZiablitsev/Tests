@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import steps.ContextMenuSteps;
 import steps.DynamicControlsSteps;
+import steps.FileUploaderSteps;
 
 public class SmokeTest extends BaseTest {
 
@@ -35,5 +36,14 @@ public class SmokeTest extends BaseTest {
         dynamicControlsSteps.workWithEnableButton();
         Assert.assertTrue(dynamicControlsSteps.getEnableMessage().isDisplayed());
         Assert.assertTrue(dynamicControlsSteps.getInput().isEnabled());
+    }
+
+    @Test
+    public void UploadFile(){
+        FileUploaderSteps fileUploaderSteps = new FileUploaderSteps(browsersService);
+        fileUploaderSteps.uploadFile();
+
+        Assert.assertTrue(fileUploaderSteps.getMessageBy().isEnabled());
+
     }
 }
