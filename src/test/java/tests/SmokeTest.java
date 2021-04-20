@@ -20,7 +20,6 @@ public class SmokeTest extends BaseTest {
         alert.accept();
 
         Assert.assertTrue(contextMenuSteps.hotSpot().isDisplayed());
-
     }
 
     @Test
@@ -30,7 +29,7 @@ public class SmokeTest extends BaseTest {
         dynamicControlsSteps.workWithCheckbox();
 
         Assert.assertTrue(dynamicControlsSteps.getCheckboxMessage().isDisplayed());
-        Assert.assertEquals(dynamicControlsSteps.getCountCheckbox().size(),0,"Checkbox is in a page");
+        Assert.assertEquals(dynamicControlsSteps.getCountCheckbox().size(), 0, "Checkbox is in a page");
 
         Assert.assertFalse(dynamicControlsSteps.getInput().isEnabled());
         dynamicControlsSteps.workWithEnableButton();
@@ -39,11 +38,10 @@ public class SmokeTest extends BaseTest {
     }
 
     @Test
-    public void UploadFile(){
+    public void UploadFile() {
         FileUploaderSteps fileUploaderSteps = new FileUploaderSteps(browsersService);
         fileUploaderSteps.uploadFile();
 
-        Assert.assertTrue(fileUploaderSteps.getMessageBy().isEnabled());
-
+        Assert.assertTrue(fileUploaderSteps.getMessage1().isEnabled());
     }
 }

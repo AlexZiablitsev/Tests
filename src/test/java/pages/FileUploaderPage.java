@@ -12,7 +12,7 @@ public class FileUploaderPage extends BasePage {
     private static final By uploadFileButtonBy = By.id("file-submit");
     private static final By fileUploadBy = By.xpath("//*[@method='POST']");
     private static final By uploadFileBy = By.id("uploadFile");
-    private static final By messageBy = By.id("uploaded-files");
+    private static final By messageBy = By.xpath("//*[contains(text(),'picture.jpg')]");
 
     public FileUploaderPage(BrowsersService browsersService, boolean openPageByUrl) {
         super(browsersService, openPageByUrl);
@@ -38,8 +38,8 @@ public class FileUploaderPage extends BasePage {
         return driver.findElement(uploadFileButtonBy);
     }
 
-    public WebElement getMessage() {
-        return driver.findElement(messageBy);
+    public By getMessage() {
+        return messageBy;
     }
 
     @Override

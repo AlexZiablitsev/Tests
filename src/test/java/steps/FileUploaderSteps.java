@@ -3,6 +3,7 @@ package steps;
 import baseEntities.BaseStep;
 import core.BrowsersService;
 import core.ReadProperties;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import pages.FileUploaderPage;
@@ -25,23 +26,16 @@ public class FileUploaderSteps extends BaseStep {
                 + "arguments[0].appendChild(s);", element);
 
         String file = (new ReadProperties().getUserDirectory()) + "/picture.jpg";
-        String file1 = "E:/Tests/src/test/resources/picture1.jpg";
+        String file1 = "E:/Tests/src/test/resources/UsersDirectory/picture1.jpg";
         browsersService.getDriver().findElement(fileUploaderPage.getInputFile()).sendKeys(file);
         browsersService.getDriver().findElement(fileUploaderPage.getUploadFile()).sendKeys(file1);
         fileUploaderPage.getUploadFileButton().click();
         Waits waits = new Waits(browsersService.getDriver());
         WebElement webElement = waits.waitForVisibility(fileUploaderPage.getMessage());
-
-
-        try {
-            Thread.sleep(1000000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
     }
-    public WebElement getMessageBy() {
+
+    public WebElement getMessage1() {
         FileUploaderPage fileUploaderPage = new FileUploaderPage(browsersService, false);
-        return fileUploaderPage.getMessage();
+        return browsersService.getDriver().findElement(fileUploaderPage.getMessage());
     }
 }
