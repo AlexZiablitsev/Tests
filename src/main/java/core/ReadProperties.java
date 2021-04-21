@@ -21,4 +21,8 @@ public class ReadProperties {
     public String getBrowserName() { return properties.getProperty("browser");}
 
     public int getTimeout() { return Integer.parseInt(properties.getProperty("timeout"));}
+
+    public String getOnlinerURL() { return properties.getProperty("onlinerurl");}
+
+
 }

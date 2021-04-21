@@ -4,6 +4,7 @@ import baseEntities.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import steps.AlertSteps;
+import steps.IFrameSteps;
 
 public class SmokeTest extends BaseTest {
 
@@ -20,6 +21,13 @@ public class SmokeTest extends BaseTest {
         Assert.assertEquals(alertSteps.getResult().getText(), "You entered: Alert");
     }
 
+    @Test
+    public void FrameTest() {
+        IFrameSteps iFrameSteps = new IFrameSteps(browsersService);
+        iFrameSteps.workWithIframe();
+        Assert.assertEquals(iFrameSteps.getCheck(), "text-align: center;");
+        browsersService.getDriver().switchTo().defaultContent();
+    }
 }
 
 
