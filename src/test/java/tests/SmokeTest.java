@@ -5,6 +5,7 @@ import org.openqa.selenium.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import steps.ContextMenuSteps;
+import steps.DownloadSteps;
 import steps.DynamicControlsSteps;
 import steps.FileUploaderSteps;
 
@@ -38,10 +39,20 @@ public class SmokeTest extends BaseTest {
     }
 
     @Test
-    public void UploadFile() {
+    public void UploadFileTest() {
         FileUploaderSteps fileUploaderSteps = new FileUploaderSteps(browsersService);
         fileUploaderSteps.uploadFile();
 
         Assert.assertTrue(fileUploaderSteps.getMessage1().isEnabled());
     }
+
+    @Test
+    public void DownloadTest() {
+        DownloadSteps downloadSteps = new DownloadSteps(browsersService);
+        downloadSteps.downLoadFile();
+
+        Assert.assertTrue(downloadSteps.getFile(), "Downloaded document is not found");
+        downloadSteps.deleteFile();
+    }
+
 }
