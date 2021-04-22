@@ -24,7 +24,7 @@ public class DownloadSteps extends BaseStep {
     }
 
 
-    public void downLoadFile() {
+    public void downLoadFile(String name) {
 
         HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
         chromePrefs.put("profile.default_content_settings.popups", 0);
@@ -35,10 +35,10 @@ public class DownloadSteps extends BaseStep {
         BrowsersService browsersService = new BrowsersService(options);
         DownloadPage downloadPage = new DownloadPage(browsersService, true, options);
 
-        WebElement el = downloadPage.getDownloadFile(fileName);
+        WebElement el = downloadPage.getDownloadFile(fileName.replace("webdriverIO.png",name));
         el.click();
 
-        downloaded_report = new File(path + "/" + fileName);
+        downloaded_report = new File(path + "/" + fileName.replace("webdriverIO.png",name));
         FluentWait<WebDriver> wait = new FluentWait<WebDriver>(browsersService.getDriver());
         wait.pollingEvery(1, TimeUnit.SECONDS);
         wait.withTimeout(15, TimeUnit.SECONDS);
@@ -47,7 +47,7 @@ public class DownloadSteps extends BaseStep {
         browsersService.getDriver().quit();
     }
 
-    public boolean getFile() {
+    public boolean getFile(String name) {
 
         File folder = new File(path);
 
@@ -59,8 +59,8 @@ public class DownloadSteps extends BaseStep {
         for (File listOfFile : listOfFiles) {
             if (listOfFile.isFile()) {
                 String fileName = listOfFile.getName();
-                if (fileName.matches(fileName)) {
-                    file = new File(fileName);
+                if (fileName.matches(this.fileName.replace("webdriverIO.png",name))) {
+                    file = new File(this.fileName.replace("webdriverIO.png",name));
                     found = true;
                 }
 
@@ -69,8 +69,8 @@ public class DownloadSteps extends BaseStep {
         return found;
     }
 
-    public void deleteFile() {
-        File file = new File(path + "/"+ fileName);
+    public void deleteFile(String name) {
+        File file = new File(path + "/"+ fileName.replace("webdriverIO.png",name));
         file.delete();
     }
 }
