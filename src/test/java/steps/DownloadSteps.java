@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 public class DownloadSteps extends BaseStep {
     String path = System.getProperty("user.dir") + new ReadProperties().getUserDirectory();
     private File downloaded_report;
-    private String fileName = "webdriverIO.png";
 
     public DownloadSteps(BrowsersService browsersService) {
         super(browsersService);
@@ -35,10 +34,10 @@ public class DownloadSteps extends BaseStep {
         BrowsersService browsersService = new BrowsersService(options);
         DownloadPage downloadPage = new DownloadPage(browsersService, true, options);
 
-        WebElement el = downloadPage.getDownloadFile(fileName.replace("webdriverIO.png",name));
+        WebElement el = downloadPage.getDownloadFile(name);
         el.click();
 
-        downloaded_report = new File(path + "/" + fileName.replace("webdriverIO.png",name));
+        downloaded_report = new File(path + "/" + name);
         FluentWait<WebDriver> wait = new FluentWait<WebDriver>(browsersService.getDriver());
         wait.pollingEvery(1, TimeUnit.SECONDS);
         wait.withTimeout(15, TimeUnit.SECONDS);
@@ -59,8 +58,8 @@ public class DownloadSteps extends BaseStep {
         for (File listOfFile : listOfFiles) {
             if (listOfFile.isFile()) {
                 String fileName = listOfFile.getName();
-                if (fileName.matches(this.fileName.replace("webdriverIO.png",name))) {
-                    file = new File(this.fileName.replace("webdriverIO.png",name));
+                if (fileName.matches(name)) {
+                    file = new File(name);
                     found = true;
                 }
 
@@ -70,7 +69,7 @@ public class DownloadSteps extends BaseStep {
     }
 
     public void deleteFile(String name) {
-        File file = new File(path + "/"+ fileName.replace("webdriverIO.png",name));
+        File file = new File(path + "/"+ name);
         file.delete();
     }
 }
