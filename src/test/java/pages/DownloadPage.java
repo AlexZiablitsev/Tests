@@ -9,7 +9,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class DownloadPage extends BasePage {
     private static final String END_POINT = "download";
     private static final By tittleBy = By.xpath("//*[contains(text(),'Powered by')]");
-    protected static final By downloadFileBy = By.xpath("//*[text()= 'webdriverIO.png']");
+    protected static final String downloadFileBy = "//*[text()= 'webdriverIO.png']";
 
     public DownloadPage(BrowsersService browsersService, boolean openPageByUrl,ChromeOptions options) {
         super(browsersService, openPageByUrl);
@@ -19,8 +19,8 @@ public class DownloadPage extends BasePage {
         return driver.findElement(tittleBy);
     }
 
-    public WebElement getDownloadFile() {
-        return driver.findElement(downloadFileBy);
+    public WebElement getDownloadFile(String fileName) {
+        return driver.findElement(By.xpath(downloadFileBy.replace("webdriverIO.png",fileName)));
     }
 
     @Override
