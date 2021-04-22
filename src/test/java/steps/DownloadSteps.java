@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 
 public class DownloadSteps extends BaseStep {
+    String path = System.getProperty("user.dir") + new ReadProperties().getUserDirectory();
 
     public DownloadSteps(BrowsersService browsersService) {
         super(browsersService);
@@ -22,12 +23,12 @@ public class DownloadSteps extends BaseStep {
 
         HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
         chromePrefs.put("profile.default_content_settings.popups", 0);
-        chromePrefs.put("download.default_directory", new ReadProperties().getUserDirectory());
+        chromePrefs.put("download.default_directory", path);
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", chromePrefs);
 
         BrowsersService browsersService = new BrowsersService(options);
-        DownloadPage downloadPage = new DownloadPage(browsersService, true,options);
+        DownloadPage downloadPage = new DownloadPage(browsersService, true, options);
 
         WebElement el = downloadPage.getDownloadFile();
         el.click();
@@ -42,7 +43,7 @@ public class DownloadSteps extends BaseStep {
 
     public boolean getFile() {
 
-        File folder = new File(new ReadProperties().getUserDirectory());
+        File folder = new File(path);
 
         File[] listOfFiles = folder.listFiles();
 
@@ -52,7 +53,7 @@ public class DownloadSteps extends BaseStep {
         for (File listOfFile : listOfFiles) {
             if (listOfFile.isFile()) {
                 String fileName = listOfFile.getName();
-                if (fileName.matches("Landscape-Color.jpg")) {
+                if (fileName.matches("webdriverIO.png")) {
                     file = new File(fileName);
                     found = true;
                 }
@@ -63,7 +64,7 @@ public class DownloadSteps extends BaseStep {
     }
 
     public void deleteFile() {
-        File file = new File(new ReadProperties().getUserDirectory() + "/Landscape-Color.jpg");
+        File file = new File(path + "/webdriverIO.png");
         file.delete();
     }
 }
