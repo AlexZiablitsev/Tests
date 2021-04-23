@@ -1,6 +1,7 @@
 package tests;
 
 import baseEntities.BaseTest;
+import enums.ProjectType;
 import models.Project;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -17,6 +18,7 @@ import pages.DashboardPage;
 import pages.LoginPage;
 import steps.LoginSteps;
 import steps.ProjectSteps;
+import wrappers.CheckBox;
 import wrappers.UIElement;
 
 import java.util.Date;
@@ -83,85 +85,20 @@ public class SmokeTest1 extends BaseTest {
     }
 
     @Test
-    public void waitTest() {
-        LoginPage loginPage = new LoginPage(browsersService, true);
-        loginPage.getEmailInput().sendKeys("atrostyanko+0401@gmail.com");
-        loginPage.getPasswordInput().sendKeys("QqtRK9elseEfAk6ilYcJ");
-        loginPage.getLogInButton().click();
+    public void UpdateProject(){
+        Project project1 = new Project();
+        project1.setName("AZjablicev_01");
+        project1.setNewName("AZjablicev_01");
+        project1.setAnnouncement("project2");
+        project1.setShowAnnouncement(false);
+        project1.setProjectType(ProjectType.SINGLE_WITH_BASELINE);
 
-        long start = new Date().getTime();
-        WebElement element = waits.waitForVisibility(new DashboardPage(browsersService, false).getSidebarProjectsAddButton());
-        long stop = new Date().getTime();
-        System.out.println("Duration: " + (stop - start));
-        Assert.assertTrue(element.isDisplayed());
-
-        browsersService.getDriver().navigate().refresh();
-        Wait<WebDriver> fluent = new FluentWait<>(browsersService.getDriver())
-                .withTimeout(20, TimeUnit.SECONDS)
-                .pollingEvery(20, TimeUnit.MILLISECONDS)
-                .ignoring(NoSuchElementException.class);
-        start = new Date().getTime();
-        WebElement foo = fluent.until(driver -> browsersService.getDriver().findElement(By.id("sidebar-projects-add")));
-        stop = new Date().getTime();
-        System.out.println("Duration: " + (stop - start));
-        Assert.assertTrue(foo.isDisplayed());
-        browsersService.getDriver().navigate().refresh();
-        WebElement foo1 = fluent.until(ExpectedConditions.visibilityOfElementLocated(By.id("sidebar-projects-add")));
-        Assert.assertTrue(foo1.isDisplayed());
-
-
-    }
-
-    @Test
-    public void actionTest() {
         LoginSteps loginSteps = new LoginSteps(browsersService);
-        DashboardPage dashboardPage = loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-        dashboardPage.getSidebarProjectsAddButton().click();
+        loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
+        ProjectSteps projectsSteps = new ProjectSteps(browsersService);
+        projectsSteps.updateProject(project1);
 
-        WebElement icon = waits.waitForVisibility(By.className("icon-markdown-table"));
-        Actions actions = new Actions(browsersService.getDriver());
-        actions.moveToElement(icon).build().perform();
-        Assert.assertTrue(waits.waitForAttributeContains(By.id("tooltip"), "style", "display: block"));
-
-        WebElement anon = waits.waitForVisibility(By.id("announcement"));
-        Actions actions1 = new Actions(browsersService.getDriver());
-        actions.moveToElement(icon).build().perform();
-        actions.moveToElement(anon)
-                .click()
-                .sendKeys("test")
-                .keyDown(Keys.LEFT_CONTROL)
-                .sendKeys("a")
-                .sendKeys("c")
-                .sendKeys(Keys.ARROW_RIGHT)
-                .sendKeys("v")
-                .keyUp(Keys.LEFT_CONTROL).build().perform();
-
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Assert.assertTrue(projectsSteps.getMessageSuccessUpdate().isDisplayed());
     }
 
-    @Test
-    public void wrapperTest() {
-        LoginSteps loginSteps = new LoginSteps(browsersService);
-        DashboardPage dashboardPage = loginSteps
-                .loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-
-        browsersService.getDriver().get("https://aqa04onl02.testrail.io/index.php?/suites/edit/545/1");
-
-        UIElement button = new UIElement(browsersService.getDriver(), By.className("icon-markdown-table"));
-        UIElement button1 = new UIElement(browsersService.getDriver(), By.className("icon-markdown-table"));
-        button.hover();
-        button.dragAndDrop(button1);
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-    }
 }

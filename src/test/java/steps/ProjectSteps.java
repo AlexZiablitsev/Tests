@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pages.AddProjectPage;
 import pages.ProjectsPage;
+import wrappers.CheckBox;
 
 import java.util.List;
 
@@ -58,14 +59,14 @@ public class ProjectSteps extends BaseStep {
         editProject.getInputNameProject().sendKeys(project.getNewName());
         editProject.getInputProjectAnnouncement().clear();
         editProject.getInputProjectAnnouncement().sendKeys(project.getAnnouncement());
-
+        CheckBox checkBox =  editProject.getShowAnnouncement();
         if (project.isShowAnnouncement()) {
-            if (!editProject.getCheckAnnouncement())
-                editProject.getShowAnnouncement().click();
+            if (!checkBox.checkboxOnOrOff())
+                checkBox.click();
         }
         if (!project.isShowAnnouncement()) {
-            if (editProject.getCheckAnnouncement()) {
-                editProject.getShowAnnouncement().click();
+            if (checkBox.checkboxOnOrOff()) {
+                checkBox.click();
             }
         }
 

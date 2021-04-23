@@ -4,6 +4,8 @@ import baseEntities.BasePage;
 import core.BrowsersService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import wrappers.Button;
+import wrappers.CheckBox;
 
 import java.util.List;
 
@@ -22,15 +24,6 @@ public class AddProjectPage extends BasePage {
         super(browserService, openPageByUrl);
     }
 
-    public boolean getCheckAnnouncement() {
-        List<WebElement> checked = driver.findElements(checkAnnouncementBy);
-        if(checked.size()!=0){
-            return true;
-        }else {
-            return false;
-        }
-    }
-
     public WebElement getAcceptButton() {
         return driver.findElement(acceptButtonBy);
     }
@@ -43,8 +36,8 @@ public class AddProjectPage extends BasePage {
         return driver.findElement(inputProjectAnnouncementBy);
     }
 
-    public WebElement getShowAnnouncement() {
-        return driver.findElement(showAnnouncementBy);
+    public CheckBox getShowAnnouncement() {
+        return new CheckBox(driver, showAnnouncementBy);
     }
 
     public WebElement getType1() {
@@ -67,7 +60,7 @@ public class AddProjectPage extends BasePage {
     @Override
     public boolean isPageOpened() {
         try {
-            return getAcceptButton().isDisplayed();
+            return new Button(driver, acceptButtonBy).isDisplayed();
         } catch (Exception ex) {
             return false;
         }
