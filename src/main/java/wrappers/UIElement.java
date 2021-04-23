@@ -8,7 +8,7 @@ import java.util.List;
 
 public class UIElement implements WebElement {
     private final WebDriver driver;
-    private final By by;
+    private By by;
     private final WebElement element;
     private Actions actions;
     private JavascriptExecutor jsExecutor;
@@ -21,6 +21,14 @@ public class UIElement implements WebElement {
         this.waits = new Waits(driver);
         this.by = by;
         element = driver.findElement(by);
+    }
+
+    public UIElement(WebDriver driver, WebElement element) {
+        this.driver = driver;
+        this.actions = new Actions(driver);
+        this.jsExecutor = (JavascriptExecutor) driver;
+        this.waits = new Waits(driver);
+        this.element = element;
     }
 
     @Override
@@ -133,5 +141,4 @@ public class UIElement implements WebElement {
                 .build()
                 .perform();
     }
-
 }

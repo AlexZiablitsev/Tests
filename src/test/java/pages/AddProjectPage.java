@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import wrappers.Button;
 import wrappers.CheckBox;
+import wrappers.RadioButton;
 
 import java.util.List;
 
@@ -18,18 +19,22 @@ public class AddProjectPage extends BasePage {
     protected By suiteModeSingleSelectorBy = By.id("suite_mode_single");
     protected By suiteModeSingleBaselineSelectorBy = By.id("suite_mode_single_baseline");
     protected By suiteModeMultiSelectorBy = By.id("suite_mode_multi");
-    private By checkAnnouncementBy = By.xpath("//*[@id='show_announcement' and @checked='checked']");
+    private By radioButtonBy = By.name("suite_mode");
 
     public AddProjectPage(BrowsersService browserService, boolean openPageByUrl) {
         super(browserService, openPageByUrl);
     }
 
-    public WebElement getAcceptButton() {
-        return driver.findElement(acceptButtonBy);
+    public Button getAcceptButton() {
+        return new Button(driver, acceptButtonBy);
     }
 
     public WebElement getInputNameProject() {
         return driver.findElement(inputNameProjectBy);
+    }
+
+    public RadioButton radioButton() {
+        return new RadioButton(driver, radioButtonBy);
     }
 
     public WebElement getInputProjectAnnouncement() {
