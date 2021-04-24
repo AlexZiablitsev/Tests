@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 
 public class DashboardPage extends BasePage {
     private static String END_POINT = "index.php?/dashboard";
+    private static final By dropDownMenuBy = By.id("helpDropdown");
 
     protected static final By sidebarProjectsAddButtonBy = By.id("sidebar-projects-add");
 

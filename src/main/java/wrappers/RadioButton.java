@@ -24,7 +24,6 @@ public class RadioButton {
         this.element = new UIElement(driver, element);
     }
 
-
     public void click() {
         element.click();
     }
