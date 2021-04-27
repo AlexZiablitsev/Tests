@@ -4,6 +4,7 @@ import baseEntities.BasePage;
 import core.BrowsersService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import utils.Waits;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class DynamicControlsPage extends BasePage {
         return driver.findElement(checkboxBy);
     }
 
-    public List<WebElement> getCountCheckbox(){
+    public List<WebElement> getCountCheckbox() {
         return driver.findElements(checkboxBy);
     }
 
@@ -38,7 +39,8 @@ public class DynamicControlsPage extends BasePage {
     }
 
     public WebElement getCheckboxMessage() {
-        return driver.findElement(checkboxMessageBy);
+        Waits waits = new Waits(browsersService.getDriver());
+        return waits.waitForInVisibility(checkboxMessageBy);
     }
 
     public WebElement getInput() {
@@ -50,7 +52,8 @@ public class DynamicControlsPage extends BasePage {
     }
 
     public WebElement getEnableMessage() {
-        return driver.findElement(enableMessageBy);
+        Waits waits = new Waits(browsersService.getDriver());
+        return waits.waitForInVisibility(enableMessageBy);
     }
 
     @Override
