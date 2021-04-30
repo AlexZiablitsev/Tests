@@ -10,9 +10,7 @@ import org.testng.asserts.SoftAssert;
 import pages.LoginPage;
 import steps.LoginSteps;
 import steps.ProjectSteps;
-import wrappers.RadioButton;
-import wrappers.Table;
-import wrappers.TableRow;
+import wrappers.*;
 
 
 public class SmokeTest1 extends BaseTest {
@@ -84,5 +82,15 @@ public class SmokeTest1 extends BaseTest {
 
         radioButton.selectByValue(3);
         radioButton.selectByText("Use a single repository with baseline support");
+    }
+
+    @Test
+    public void DropDownMenuTest(){
+        LoginSteps loginSteps = new LoginSteps(browsersService);
+        loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
+        browsersService.getDriver().get("https://aqa04onl03.testrail.io/index.php?/dashboard");
+
+        DropDownMenu dropDownMenu = new DropDownMenu(browsersService.getDriver(), By.id("helpDropdown"));
+        dropDownMenu.selectByName("TestRail User Guide");
     }
 }
