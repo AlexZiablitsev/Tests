@@ -37,13 +37,13 @@ public class ProjectSteps extends BaseStep {
         if (project.getProjectType() != null) {
             switch (project.getProjectType().toString()) {
                 case "SINGLE_FOR_ALL_CASES":
-                    addProjectPage.radioButton().chooseValue(1);
+                    addProjectPage.radioButton().selectByValue(1);
                     break;
                 case "SINGLE_FOR_ALL_BASELINE":
-                    addProjectPage.radioButton().chooseValue(2);
+                    addProjectPage.radioButton().selectByValue(2);
                     break;
                 case "MULTIPLE":
-                    addProjectPage.radioButton().chooseValue(3);
+                    addProjectPage.radioButton().selectByValue(3);
                     break;
             }
         }
@@ -73,14 +73,14 @@ public class ProjectSteps extends BaseStep {
         if (project.getProjectType() != null) {
             switch (project.getProjectType().toString()) {
                 case "SINGLE_FOR_ALL_CASES":
-                    editProject.radioButton().chooseValue(1);
+                    editProject.radioButton().selectByValue(1);
                     break;
                 case "SINGLE_FOR_ALL_BASELINE":
-                    editProject.radioButton().chooseValue(2);
+                    editProject.radioButton().selectByValue(2);
                     break;
                 case "MULTIPLE":
                     editProject.
-                    radioButton().chooseValue(3);
+                    radioButton().selectByValue(3);
                     break;
             }
         }

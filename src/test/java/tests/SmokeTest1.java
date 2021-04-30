@@ -3,12 +3,16 @@ package tests;
 import baseEntities.BaseTest;
 import enums.ProjectType;
 import models.Project;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.LoginPage;
 import steps.LoginSteps;
 import steps.ProjectSteps;
+import wrappers.RadioButton;
+import wrappers.Table;
+import wrappers.TableRow;
 
 
 public class SmokeTest1 extends BaseTest {
@@ -67,5 +71,18 @@ public class SmokeTest1 extends BaseTest {
         projectsSteps.updateProject(project1);
 
         Assert.assertTrue(projectsSteps.getMessageSuccessUpdate().isDisplayed());
+    }
+
+    @Test
+    public void RadioButtonTest() {
+        LoginSteps loginSteps = new LoginSteps(browsersService);
+        loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
+        browsersService.getDriver().get("https://aqa04onl03.testrail.io/index.php?/admin/projects/add/1");
+
+
+        RadioButton radioButton = new RadioButton(browsersService.getDriver(), By.name("suite_mode"));
+
+        radioButton.selectByValue(3);
+        radioButton.selectByText("Use a single repository with baseline support");
     }
 }
