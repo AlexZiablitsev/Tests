@@ -37,7 +37,7 @@ public class DownloadSteps extends BaseStep {
         WebElement el = downloadPage.getDownloadFile(name);
         el.click();
 
-        downloaded_report = new File(path + "/" + name);
+        downloaded_report = new File(path + File.separator + name);
         FluentWait<WebDriver> wait = new FluentWait<WebDriver>(browsersService.getDriver());
         wait.pollingEvery(1, TimeUnit.SECONDS);
         wait.withTimeout(15, TimeUnit.SECONDS);
@@ -69,7 +69,7 @@ public class DownloadSteps extends BaseStep {
     }
 
     public void deleteFile(String name) {
-        File file = new File(path + "/"+ name);
+        File file = new File(path + File.separator + name);
         file.delete();
     }
 }

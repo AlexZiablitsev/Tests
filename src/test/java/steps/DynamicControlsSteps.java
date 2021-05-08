@@ -19,14 +19,14 @@ public class DynamicControlsSteps extends BaseStep {
         dynamicControlsPage.getCheckbox().click();
         dynamicControlsPage.getRemoveButton().click();
         Waits wait = new Waits(browsersService.getDriver());
-        WebElement element = wait.waitForVisibility(dynamicControlsPage.getCheckboxMessage());
+        wait.waitForVisibility(dynamicControlsPage.getCheckboxMessage());
     }
 
     public void workWithEnableButton() {
         DynamicControlsPage dynamicControlsPage = new DynamicControlsPage(browsersService, true);
         dynamicControlsPage.getEnableButton().click();
         Waits wait = new Waits(browsersService.getDriver());
-        WebElement element = wait.waitForVisibility(dynamicControlsPage.getEnableMessage());
+        wait.waitForVisibility(dynamicControlsPage.getEnableMessage());
     }
 
     public WebElement getCheckboxMessage() {

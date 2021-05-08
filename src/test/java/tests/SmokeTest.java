@@ -49,7 +49,7 @@ public class SmokeTest extends BaseTest {
     @Test
     public void DownloadTest() {
         DownloadSteps downloadSteps = new DownloadSteps(browsersService);
-        String filename = "webdriverIO.png";
+        String filename = "picture.png";
         downloadSteps.downLoadFile(filename);
 
         Assert.assertTrue(downloadSteps.getFile(filename), "Downloaded document is not found");

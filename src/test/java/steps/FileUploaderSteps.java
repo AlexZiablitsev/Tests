@@ -9,8 +9,12 @@ import org.openqa.selenium.WebElement;
 import pages.FileUploaderPage;
 import utils.Waits;
 
+import java.io.File;
+
 
 public class FileUploaderSteps extends BaseStep {
+    String path = System.getProperty("user.dir") + new ReadProperties().getUserDirectory();
+
     public FileUploaderSteps(BrowsersService browsersService) {
         super(browsersService);
     }
@@ -19,16 +23,16 @@ public class FileUploaderSteps extends BaseStep {
         FileUploaderPage fileUploaderPage = new FileUploaderPage(browsersService, true);
 
         JavascriptExecutor js = (JavascriptExecutor) browsersService.getDriver();
-        WebElement element = browsersService.getDriver().findElement(fileUploaderPage.fileUpload());
+        WebElement element = fileUploaderPage.fileUpload();
         js.executeScript("var s=window.document.createElement('input');"
                 + "s.type = 'file';"
                 + "s.id = 'uploadFile';"
                 + "arguments[0].appendChild(s);", element);
 
-        String file = (new ReadProperties().getUserDirectory()) + "/picture.jpg";
-        String file1 = "E:/Tests/src/test/resources/UsersDirectory/picture1.jpg";
-        browsersService.getDriver().findElement(fileUploaderPage.getInputFile()).sendKeys(file);
-        browsersService.getDriver().findElement(fileUploaderPage.getUploadFile()).sendKeys(file1);
+        String file = path + File.separator + "picture.jpg";
+        String file1 = path + File.separator + "picture1.jpg";
+        fileUploaderPage.getInputFile().sendKeys(file);
+        fileUploaderPage.getUploadFile().sendKeys(file1);
         fileUploaderPage.getUploadFileButton().click();
         Waits waits = new Waits(browsersService.getDriver());
         WebElement webElement = waits.waitForVisibility(fileUploaderPage.getMessage());

@@ -22,16 +22,16 @@ public class FileUploaderPage extends BasePage {
         return driver.findElement(tittleBy);
     }
 
-    public By getInputFile() {
-        return inputFileBy;
+    public WebElement getInputFile() {
+        return driver.findElement(inputFileBy);
     }
 
-    public By fileUpload() {
-        return fileUploadBy;
+    public WebElement fileUpload() {
+        return driver.findElement(fileUploadBy);
     }
 
-    public By getUploadFile() {
-        return uploadFileBy;
+    public WebElement getUploadFile() {
+        return driver.findElement(uploadFileBy);
     }
 
     public WebElement getUploadFileButton() {
