@@ -18,12 +18,22 @@ public class CheckBox {
         return element.isDisplayed();
     }
 
-    public boolean checkboxOnOrOff() {
-
+    public String checkboxOnOrOff() {
         if (element.getAttribute("checked") != null) {
-            return true;
+            return "true";
         } else {
-            return false;
+            return "false";
+        }
+    }
+
+    public void selectCheckbox() {
+        switch (checkboxOnOrOff()) {
+            case "true":
+                element.click();
+                break;
+            case "false":
+                element.click();
+                break;
         }
     }
 

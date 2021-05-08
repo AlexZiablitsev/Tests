@@ -4,6 +4,7 @@ import baseEntities.BaseTest;
 import enums.ProjectType;
 import models.Project;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -11,6 +12,8 @@ import pages.LoginPage;
 import steps.LoginSteps;
 import steps.ProjectSteps;
 import wrappers.*;
+
+import java.util.ArrayList;
 
 
 public class SmokeTest1 extends BaseTest {
@@ -30,12 +33,11 @@ public class SmokeTest1 extends BaseTest {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(loginPage.getErrorText(),
-                "Email/Login or Password is incorrect. Please try again.1");
+                "Email/Login or Password is incorrect. Please try again.");
         softAssert.assertEquals(loginPage.getErrorText(),
                 "Email/Login or Password is incorrect. Please try again.2");
         softAssert.assertAll();
     }
-
 
     @Test
     public void AddProjectTest() {
@@ -75,7 +77,7 @@ public class SmokeTest1 extends BaseTest {
     public void RadioButtonTest() {
         LoginSteps loginSteps = new LoginSteps(browsersService);
         loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-        browsersService.getDriver().get("https://aqa04onl03.testrail.io/index.php?/admin/projects/add/1");
+        browsersService.getDriver().get("https://aqa04onl04.testrail.io/index.php?/admin/projects/add/1");
 
 
         RadioButton radioButton = new RadioButton(browsersService.getDriver(), By.name("suite_mode"));
@@ -85,12 +87,19 @@ public class SmokeTest1 extends BaseTest {
     }
 
     @Test
-    public void DropDownMenuTest(){
+    public void DropDownMenuTest() {
         LoginSteps loginSteps = new LoginSteps(browsersService);
+        WebDriver driver = browsersService.getDriver();
         loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-        browsersService.getDriver().get("https://aqa04onl03.testrail.io/index.php?/dashboard");
+        driver.get("https://aqa04onl04.testrail.io/index.php?/dashboard");
 
-        DropDownMenu dropDownMenu = new DropDownMenu(browsersService.getDriver(), By.id("helpDropdown"));
+        DropDownMenu dropDownMenu = new DropDownMenu(driver, By.id("helpDropdown"));
+
         dropDownMenu.selectByName("TestRail User Guide");
+        ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(1));
+        driver.close();
+        driver.switchTo().window(tabs.get(0));
+        dropDownMenu.selectByNumber(10);
     }
 }

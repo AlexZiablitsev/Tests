@@ -39,4 +39,8 @@ public class DropDownMenu {
         int index = textList.indexOf(name);
         rowsList.get(index).click();
     }
+
+    public void selectByNumber(int number) {
+        rowsList.get(number - 1).click();
+    }
 }

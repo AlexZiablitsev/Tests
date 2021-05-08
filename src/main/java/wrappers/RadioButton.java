@@ -23,10 +23,6 @@ public class RadioButton {
         textList = getRadioButtonText(radioButtonList);
     }
 
-    public void click() {
-        element.click();
-    }
-
     public void selectByValue(int value) {
         for (int i = 0; i < radioButtonList.size(); i++) {
             if (i == value - 1) {

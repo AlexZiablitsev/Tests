@@ -8,8 +8,6 @@ import wrappers.Button;
 import wrappers.CheckBox;
 import wrappers.RadioButton;
 
-import java.util.List;
-
 public class AddProjectPage extends BasePage {
     private static String END_POINT = "index.php?/admin/projects/add/1";
     private static final By inputNameProjectBy = By.id("name");

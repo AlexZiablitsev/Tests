@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pages.AddProjectPage;
 import pages.ProjectsPage;
+import wrappers.Button;
 import wrappers.CheckBox;
 
 import java.util.List;
@@ -31,8 +32,9 @@ public class ProjectSteps extends BaseStep {
         AddProjectPage addProjectPage = new AddProjectPage(browsersService, true);
         addProjectPage.getInputNameProject().sendKeys(project.getName());
         addProjectPage.getInputProjectAnnouncement().sendKeys(project.getAnnouncement());
+        CheckBox checkBox = addProjectPage.getShowAnnouncement();
         if (project.isShowAnnouncement()) {
-            addProjectPage.getShowAnnouncement().click();
+            checkBox.selectCheckbox();
         }
         if (project.getProjectType() != null) {
             switch (project.getProjectType().toString()) {
@@ -59,15 +61,13 @@ public class ProjectSteps extends BaseStep {
         editProject.getInputNameProject().sendKeys(project.getNewName());
         editProject.getInputProjectAnnouncement().clear();
         editProject.getInputProjectAnnouncement().sendKeys(project.getAnnouncement());
-        CheckBox checkBox =  editProject.getShowAnnouncement();
-        if (project.isShowAnnouncement()) {
-            if (!checkBox.checkboxOnOrOff())
-                checkBox.click();
-        }
-        if (!project.isShowAnnouncement()) {
-            if (checkBox.checkboxOnOrOff()) {
-                checkBox.click();
-            }
+
+        CheckBox checkBox = editProject.getShowAnnouncement();
+        switch (Boolean.toString(project.isShowAnnouncement())) {
+            case "true":
+                checkBox.selectCheckbox();
+            case "false":
+                checkBox.selectCheckbox();
         }
 
         if (project.getProjectType() != null) {
@@ -75,12 +75,12 @@ public class ProjectSteps extends BaseStep {
                 case "SINGLE_FOR_ALL_CASES":
                     editProject.radioButton().selectByValue(1);
                     break;
-                case "SINGLE_FOR_ALL_BASELINE":
+                case "SINGLE_WITH_BASELINE":
                     editProject.radioButton().selectByValue(2);
                     break;
                 case "MULTIPLE":
                     editProject.
-                    radioButton().selectByValue(3);
+                            radioButton().selectByValue(3);
                     break;
             }
         }
@@ -88,25 +88,26 @@ public class ProjectSteps extends BaseStep {
 
     }
 
-    public void DeleteProjects(Project project) {
+    public void deleteProjects(String name) {
         ProjectsPage projectsPage = new ProjectsPage(browsersService, true);
-        while (projectsPage.findMyProjects()) {
-            List<WebElement> list = browsersService.getDriver().findElements(By.xpath("//*[contains(text(),\"" + project.getName() + "\")]//ancestor-or-self::tr//*[@class='icon-small-delete']"));
-            list.get(0).click();
+        while (projectsPage.findMyProjects(name)) {
+            Button deleteButton = projectsPage.getDeleteButton(name);
+            deleteButton.click();
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            browsersService.getDriver().findElement(By.xpath("//*[@class='dialog-confirm-busy']/following::input")).click();
+            CheckBox checkBox = projectsPage.getCheckbox();
+            checkBox.selectCheckbox();
 
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            browsersService.getDriver().findElement(By.xpath("//*[@class='dialog-confirm-busy']/following::*[contains(text(),'OK')]")).click();
-
+            Button acceptButton = projectsPage.getAcceptDialog();
+            acceptButton.click();
         }
     }
 }
