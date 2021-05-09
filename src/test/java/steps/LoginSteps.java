@@ -22,7 +22,7 @@ public class LoginSteps extends BaseStep {
         return new DashboardPage(browsersService, false);
     }
 
-    @Step
+    @Step("Логирование с некоректрыми данными '{email}' '{psw}'")
     public LoginPage loginWithIncorrectCredentials(String email, String psw) {
         LoginPage loginPage = new LoginPage(browsersService, true);
         loginPage.getEmailInput().sendKeys(email);

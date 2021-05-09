@@ -49,4 +49,14 @@ public class Project {
         return projectType;
     }
 
+    @Override
+    public String toString() {
+        return "Project { " +
+                "name = '" + name + '\'' +
+                ", newName = ' " + newName + '\'' +
+                ", Announcement = ' " + Announcement + '\'' +
+                ", isShowAnnouncement = " + isShowAnnouncement +
+                ", projectType = " + projectType +
+                '}';
+    }
 }

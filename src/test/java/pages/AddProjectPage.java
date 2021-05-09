@@ -4,8 +4,9 @@ import baseEntities.BasePage;
 import core.BrowsersService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
-import java.util.List;
+import wrappers.Button;
+import wrappers.CheckBox;
+import wrappers.RadioButton;
 
 public class AddProjectPage extends BasePage {
     private static String END_POINT = "index.php?/admin/projects/add/1";
@@ -16,35 +17,30 @@ public class AddProjectPage extends BasePage {
     protected By suiteModeSingleSelectorBy = By.id("suite_mode_single");
     protected By suiteModeSingleBaselineSelectorBy = By.id("suite_mode_single_baseline");
     protected By suiteModeMultiSelectorBy = By.id("suite_mode_multi");
-    private By checkAnnouncementBy = By.xpath("//*[@id='show_announcement' and @checked='checked']");
+    private By radioButtonBy = By.name("suite_mode");
 
-    public AddProjectPage(BrowsersService browsersService, boolean openPageByUrl) {
-        super(browsersService, openPageByUrl);
+    public AddProjectPage(BrowsersService browserService, boolean openPageByUrl) {
+        super(browserService, openPageByUrl);
     }
 
-    public boolean getCheckAnnouncement() {
-        List<WebElement> checked = driver.findElements(checkAnnouncementBy);
-        if(checked.size()!=0){
-            return true;
-        }else {
-            return false;
-        }
-    }
-
-    public WebElement getAcceptButton() {
-        return driver.findElement(acceptButtonBy);
+    public Button getAcceptButton() {
+        return new Button(driver, acceptButtonBy);
     }
 
     public WebElement getInputNameProject() {
         return driver.findElement(inputNameProjectBy);
     }
 
+    public RadioButton radioButton() {
+        return new RadioButton(driver, radioButtonBy);
+    }
+
     public WebElement getInputProjectAnnouncement() {
         return driver.findElement(inputProjectAnnouncementBy);
     }
 
-    public WebElement getShowAnnouncement() {
-        return driver.findElement(showAnnouncementBy);
+    public CheckBox getShowAnnouncement() {
+        return new CheckBox(driver, showAnnouncementBy);
     }
 
     public WebElement getType1() {
@@ -67,7 +63,7 @@ public class AddProjectPage extends BasePage {
     @Override
     public boolean isPageOpened() {
         try {
-            return getAcceptButton().isDisplayed();
+            return new Button(driver, acceptButtonBy).isDisplayed();
         } catch (Exception ex) {
             return false;
         }

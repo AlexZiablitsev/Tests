@@ -4,39 +4,19 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import javax.swing.text.TableView;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Table {
-    private UIElement webElement;
+    private UIElement element;
     private List<TableRow> rowsList = new ArrayList<>();
+    private WebDriver driver;
 
     public Table(WebDriver webDriver, By by) {
-        this.webElement = new UIElement(webDriver, by);
-
-        int cellsCount = webElement.findElements(By.tagName("col")).size();
-        for (WebElement webElement : webElement.findElements(By.tagName("tr"))) {
+        this.element = new UIElement(webDriver, by);
+        for (WebElement webElement : element.findElements(By.tagName("tr"))) {
             TableRow tableRow = new TableRow(webDriver, webElement);
-            tableRow.setCellsCount(cellsCount);
-
             rowsList.add(tableRow);
         }
-    }
-
-    public int RowsCount() {
-        return rowsList.size();
-    }
-
-    public int getCellsCountForRow(int index) {
-        return rowsList.get(index).getCellsCount();
-    }
-
-    public TableRow getRowByTextInColumn(String text, int column) {
-        return null;
-    }
-
-    public TableView.TableRow getRowByTextInColumn(String text, String columnName) {
-        return null;
     }
 }

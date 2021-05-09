@@ -16,31 +16,46 @@ public abstract class BaseTest {
 
     @BeforeSuite
     public void setupSuite() {
-        System.out.println("BeforeSuite: ");
+    }
+
+    @AfterSuite
+    public void tearDownSuite() {
     }
 
     @BeforeGroups(groups = {"regression", "smoke"})
     public void setupGroups() {
-        System.out.println("BeforeGroups: ");
+        readProperties = new ReadProperties();
         browsersService = new BrowsersService();
         browsersService.getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         browsersService.getDriver().get(readProperties.getURL());
         waits = browsersService.getWaits();
     }
 
+    @AfterGroups(groups = {"regression", "smoke"})
+    public void tearDownGroups() {
+        browsersService.getDriver().quit();
+        browsersService = null;
+    }
+
     @BeforeTest
     public void setupTest() {
-        System.out.println("BeforeTest: ");
+    }
+
+    @AfterTest
+    public void tearDownTest() {
     }
 
     @BeforeClass
     public void setupClass() {
-        System.out.println("BeforeClass: ");
+    }
+
+    @AfterClass
+    public void tearDownClass() {
     }
 
     @BeforeMethod
     public void setupMethod() {
-        System.out.println("BeforeMethod: ");
+        readProperties = new ReadProperties();
         browsersService = new BrowsersService();
         browsersService.getDriver().manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         browsersService.getDriver().get(readProperties.getURL());
@@ -49,30 +64,7 @@ public abstract class BaseTest {
 
     @AfterMethod
     public void tearDownMethod() {
-        System.out.println("AfterMethod: ");
         browsersService.getDriver().quit();
         browsersService = null;
-    }
-
-    @AfterClass
-    public void tearDownClass() {
-        System.out.println("AfterClass: ");
-    }
-
-    @AfterTest
-    public void tearDownTest() {
-        System.out.println("AfterTest: ");
-    }
-
-    @AfterGroups(groups = {"regression", "smoke"})
-    public void tearDownGroups() {
-        System.out.println("AfterGroups: ");
-        browsersService.getDriver().quit();
-        browsersService = null;
-    }
-
-    @AfterSuite
-    public void tearDownSuite() {
-        System.out.println("AfterSuite: ");
     }
 }

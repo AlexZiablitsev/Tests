@@ -7,145 +7,144 @@ import utils.Waits;
 import java.util.List;
 
 public class UIElement implements WebElement {
-    private final WebDriver webDriver;
+    private final WebDriver driver;
     private By by;
-    private final WebElement webElement;
+    private final WebElement element;
     private Actions actions;
     private JavascriptExecutor jsExecutor;
     private Waits waits;
 
-    public UIElement(WebDriver webDriver, By by) {
-        this.webDriver = webDriver;
-        this.actions = new Actions(webDriver);
-        this.jsExecutor = (JavascriptExecutor) webDriver;
-        this.waits = new Waits(webDriver);
+    public UIElement(WebDriver driver, By by) {
+        this.driver = driver;
+        this.actions = new Actions(driver);
+        this.jsExecutor = (JavascriptExecutor) driver;
+        this.waits = new Waits(driver);
         this.by = by;
-        webElement = webDriver.findElement(by);
+        element = driver.findElement(by);
     }
 
-    public UIElement(WebDriver webDriver, WebElement webElement) {
-        this.webDriver = webDriver;
-        this.actions = new Actions(webDriver);
-        this.jsExecutor = (JavascriptExecutor) webDriver;
-        this.waits = new Waits(webDriver);
-        this.webElement = webElement;
+    public UIElement(WebDriver driver, WebElement element) {
+        this.driver = driver;
+        this.actions = new Actions(driver);
+        this.jsExecutor = (JavascriptExecutor) driver;
+        this.waits = new Waits(driver);
+        this.element = element;
     }
 
     @Override
     public void click() {
         try {
-            webElement.click();
+            element.click();
         } catch (Exception ex) {
             try {
                 actions
-                        .moveToElement(webElement)
+                        .moveToElement(element)
                         .click()
                         .build()
                         .perform();
             } catch (Exception ex1) {
-                jsExecutor.executeScript("arguments[0].click();", webElement);
+                jsExecutor.executeScript("argument[0].click();", element);
             }
         }
-
     }
 
     @Override
     public void submit() {
-        webElement.submit();
+        element.submit();
     }
 
     @Override
     public void sendKeys(CharSequence... charSequences) {
-        webElement.sendKeys(charSequences);
+        element.sendKeys(charSequences);
     }
 
     @Override
     public void clear() {
-        webElement.clear();
+        element.clear();
     }
 
     @Override
     public String getTagName() {
-        return webElement.getTagName();
+        return element.getTagName();
     }
 
     @Override
     public String getAttribute(String s) {
-        return webElement.getAttribute(s);
+        return element.getAttribute(s);
     }
 
     @Override
     public boolean isSelected() {
-        return webElement.isSelected();
+        return element.isSelected();
     }
 
     @Override
     public boolean isEnabled() {
-        return webElement.isEnabled();
+        return element.isEnabled();
     }
 
     @Override
     public String getText() {
-        return webElement.getText();
+        return element.getText();
     }
 
     @Override
     public List<WebElement> findElements(By by) {
-        return webElement.findElements(by);
+        return element.findElements(by);
     }
 
     @Override
     public WebElement findElement(By by) {
-        return webElement.findElement(by);
+        return element.findElement(by);
     }
 
     @Override
     public boolean isDisplayed() {
-        return waits.waitForVisibility(webElement).isDisplayed();
+        return waits.waitForVisibility(element).isDisplayed();
     }
 
     @Override
     public Point getLocation() {
-        return webElement.getLocation();
+        return element.getLocation();
     }
 
     @Override
     public Dimension getSize() {
-        return webElement.getSize();
+        return element.getSize();
     }
 
     @Override
     public Rectangle getRect() {
-        return webElement.getRect();
+        return element.getRect();
     }
 
     @Override
     public String getCssValue(String s) {
-        return webElement.getCssValue(s);
+        return element.getCssValue(s);
     }
 
     @Override
     public <X> X getScreenshotAs(OutputType<X> outputType) throws WebDriverException {
-        return webElement.getScreenshotAs(outputType);
+        return element.getScreenshotAs(outputType);
     }
 
     public void hover() {
         actions
-                .moveToElement(webElement)
+                .moveToElement(element)
                 .build()
                 .perform();
     }
 
     public void dragAndDrop(UIElement target) {
         actions
-                .dragAndDrop(webElement, target.webElement)
+                .dragAndDrop(element, target.element)
                 .build()
                 .perform();
     }
 
     public UIElement getParent() {
-        WebElement parent = (WebElement) ((JavascriptExecutor) webDriver).executeScript(
-                "return arguments[0].parentNode;", webElement);
-        return new UIElement(webDriver, parent);
+        WebElement parent = (WebElement) ((JavascriptExecutor) driver)
+                .executeScript("return arguments[0].parentNode;", element);
+        return new UIElement(driver, parent);
     }
 }

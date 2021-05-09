@@ -4,32 +4,21 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ReadProperties {
-    private static Properties properties;
-    private static ReadProperties instance;
+    protected Properties properties;
 
-    public static synchronized ReadProperties getInstance() {
-        if (instance == null) {
-            instance = new ReadProperties();
-            instance.properties = new Properties();
+    public ReadProperties() {
+        properties = new Properties();
 
-            try {
-                instance.properties.load(ReadProperties.class.getClassLoader().getResourceAsStream("config.properties"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            properties.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return instance;
     }
 
-    public static String getURL() {
-        return getInstance().properties.getProperty("url");
-    }
+    public String getURL() { return properties.getProperty("url");}
 
-    public static String getBrowserName() {
-        return getInstance().properties.getProperty("browser");
-    }
+    public String getBrowserName() { return properties.getProperty("browser");}
 
-    public static int getTimeout() {
-        return Integer.parseInt(getInstance().properties.getProperty("timeout"));
-    }
+    public int getTimeout() { return Integer.parseInt(properties.getProperty("timeout"));}
 }

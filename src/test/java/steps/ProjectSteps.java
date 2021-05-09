@@ -8,6 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pages.AddProjectPage;
 import pages.ProjectsPage;
+import wrappers.Button;
+import wrappers.CheckBox;
 
 import java.util.List;
 
@@ -26,30 +28,33 @@ public class ProjectSteps extends BaseStep {
     public WebElement getMessageSuccessUpdate() {
         return browsersService.getDriver().findElement(messageSuccessUpdateBy);
     }
-    @Step("")
+
+    @Step("Добавление проекта '{project}'")
     public void addProject(Project project) {
         AddProjectPage addProjectPage = new AddProjectPage(browsersService, true);
         addProjectPage.getInputNameProject().sendKeys(project.getName());
         addProjectPage.getInputProjectAnnouncement().sendKeys(project.getAnnouncement());
+        CheckBox checkBox = addProjectPage.getShowAnnouncement();
         if (project.isShowAnnouncement()) {
-            addProjectPage.getShowAnnouncement().click();
+            checkBox.selectCheckbox();
         }
         if (project.getProjectType() != null) {
             switch (project.getProjectType().toString()) {
                 case "SINGLE_FOR_ALL_CASES":
-                    addProjectPage.getType1().click();
+                    addProjectPage.radioButton().selectByValue(1);
                     break;
                 case "SINGLE_FOR_ALL_BASELINE":
-                    addProjectPage.getType2().click();
+                    addProjectPage.radioButton().selectByValue(2);
                     break;
                 case "MULTIPLE":
-                    addProjectPage.getType3().click();
+                    addProjectPage.radioButton().selectByValue(3);
                     break;
             }
         }
         addProjectPage.getAcceptButton().click();
     }
 
+    @Step("Изменение проекта '{project}'")
     public void updateProject(Project project) {
         ProjectsPage projectsPage = new ProjectsPage(browsersService, true);
         List<WebElement> myProject = projectsPage.getFindMyProjects(project.getName());
@@ -60,52 +65,51 @@ public class ProjectSteps extends BaseStep {
         editProject.getInputProjectAnnouncement().clear();
         editProject.getInputProjectAnnouncement().sendKeys(project.getAnnouncement());
 
-        if (project.isShowAnnouncement()) {
-            if (!editProject.getCheckAnnouncement())
-                editProject.getShowAnnouncement().click();
+        CheckBox checkBox = editProject.getShowAnnouncement();
+        switch (Boolean.toString(project.isShowAnnouncement())) {
+            case "true":
+                checkBox.selectCheckbox();
+            case "false":
+                checkBox.selectCheckbox();
         }
-        if (!project.isShowAnnouncement()) {
-            if (editProject.getCheckAnnouncement()) {
-                editProject.getShowAnnouncement().click();
-            }
-        }
-
         if (project.getProjectType() != null) {
             switch (project.getProjectType().toString()) {
                 case "SINGLE_FOR_ALL_CASES":
-                    editProject.getType1().click();
+                    editProject.radioButton().selectByValue(1);
                     break;
-                case "SINGLE_FOR_ALL_BASELINE":
-                    editProject.getType2().click();
+                case "SINGLE_WITH_BASELINE":
+                    editProject.radioButton().selectByValue(2);
                     break;
                 case "MULTIPLE":
-                    editProject.getType3().click();
+                    editProject.
+                            radioButton().selectByValue(3);
                     break;
             }
         }
         editProject.getAcceptButton().click();
-
     }
 
+    @Step("Удаление проектов с именем '{name}'.")
     public void deleteProjects(String name) {
         ProjectsPage projectsPage = new ProjectsPage(browsersService, true);
         while (projectsPage.findMyProjects(name)) {
-            List<WebElement> list = projectsPage.getdeleteButton(name);
-            list.get(0).click();
+            Button deleteButton = projectsPage.getDeleteButton(name);
+            deleteButton.click();
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            browsersService.getDriver().findElement(By.xpath("//*[@class='dialog-confirm-busy']/following::input")).click();
+            CheckBox checkBox = projectsPage.getCheckbox();
+            checkBox.selectCheckbox();
 
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            browsersService.getDriver().findElement(By.xpath("//*[@class='dialog-confirm-busy']/following::*[contains(text(),'OK')]")).click();
-
+            Button acceptButton = projectsPage.getAcceptDialog();
+            acceptButton.click();
         }
     }
 }

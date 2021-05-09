@@ -1,24 +1,30 @@
 package wrappers;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 public class RowsCell {
-    private UIElement webElement;
-    private WebDriver webDriver;
+    private UIElement element;
+    private WebDriver driver;
+    private Actions actions;
+    private JavascriptExecutor jsExecutor;
 
     public RowsCell(WebDriver webDriver, By by) {
-        this.webDriver = webDriver;
-        this.webElement = new UIElement(webDriver, by);
+        this.driver = webDriver;
+        this.element = new UIElement(webDriver, by);
     }
 
     public RowsCell(WebDriver webDriver, WebElement webElement) {
-        this.webDriver = webDriver;
-        this.webElement = new UIElement(webDriver, (By) webElement);
+        this.driver = webDriver;
+        this.element = new UIElement(webDriver, webElement);
+        this.actions = new Actions(driver);
+        this.jsExecutor = (JavascriptExecutor) driver;
     }
 
-    public UIElement getElementFromCell(By by) {
-        return new UIElement(webDriver, by);
+    public void click() {
+        element.click();
     }
 }
