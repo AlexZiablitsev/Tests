@@ -65,9 +65,11 @@ public class ProjectSteps extends BaseStep {
         CheckBox checkBox = editProject.getShowAnnouncement();
         switch (Boolean.toString(project.isShowAnnouncement())) {
             case "true":
-                checkBox.selectCheckbox();
             case "false":
-                checkBox.selectCheckbox();
+                if (project.isShowAnnouncement() != checkBox.checkboxOnOrOff()) {
+                    checkBox.selectCheckbox();
+                }
+                break;
         }
 
         if (project.getProjectType() != null) {
