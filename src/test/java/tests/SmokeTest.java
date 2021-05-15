@@ -1,5 +1,6 @@
 package tests;
 
+import baseEntities.BasePage;
 import baseEntities.BaseTest;
 import enums.ProjectType;
 import models.Project;
@@ -8,13 +9,11 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pages.DashboardPage;
 import pages.LoginPage;
 import steps.LoginSteps;
 import steps.ProjectSteps;
 import wrappers.*;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 
 
@@ -64,8 +63,8 @@ public class SmokeTest extends BaseTest {
         project1.setName("AZjablicev_01");
         project1.setNewName("AZjablicev_01");
         project1.setAnnouncement("project2");
-        project1.setShowAnnouncement(false);
-        project1.setProjectType(ProjectType.SINGLE_WITH_BASELINE);
+        project1.setShowAnnouncement(true);
+        project1.setProjectType(ProjectType.MULTIPLE);
 
         LoginSteps loginSteps = new LoginSteps(browsersService);
         loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
@@ -73,6 +72,14 @@ public class SmokeTest extends BaseTest {
         projectsSteps.updateProject(project1);
 
         Assert.assertTrue(projectsSteps.getMessageSuccessUpdate().isDisplayed());
+    }
+
+    @Test
+    public void deleteProjects() {
+        LoginSteps loginSteps = new LoginSteps(browsersService);
+        loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
+        ProjectSteps projectsSteps = new ProjectSteps(browsersService);
+        projectsSteps.deleteProjects("AZjablicev");
     }
 
     @Test
@@ -92,12 +99,10 @@ public class SmokeTest extends BaseTest {
         LoginSteps loginSteps = new LoginSteps(browsersService);
         WebDriver driver = browsersService.getDriver();
         loginSteps.loginWithCorrectCredentials("atrostyanko+0401@gmail.com", "QqtRK9elseEfAk6ilYcJ");
-        driver.get("https://aqa04onl04.testrail.io/index.php?/dashboard");
-
-        DropDownMenu dropDownMenu = new DropDownMenu(driver, By.id("helpDropdown"));
+        DropDownMenu dropDownMenu = new DropDownMenu(driver, BasePage.dropDownMenu);
 
         dropDownMenu.selectByName("TestRail User Guide");
-        ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
         driver.close();
         driver.switchTo().window(tabs.get(0));

@@ -23,19 +23,17 @@ public class CheckBox {
         return element.isDisplayed();
     }
 
-    public String checkboxOnOrOff() {
+    public boolean checkboxOnOrOff() {
         if (element.getAttribute("checked") != null) {
-            return "true";
+            return true;
         } else {
-            return "false";
+            return false;
         }
     }
 
     public void selectCheckbox() {
-        switch (checkboxOnOrOff()) {
+        switch (Boolean.toString(checkboxOnOrOff())) {
             case "true":
-                element.click();
-                break;
             case "false":
                 element.click();
                 break;

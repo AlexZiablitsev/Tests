@@ -3,7 +3,6 @@ package wrappers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +17,15 @@ public class RadioButton {
         this.element = new UIElement(driver, by);
         this.driver = driver;
         for (WebElement webElement : driver.findElements(by)) {
+            radioButtonList.add(new UIElement(driver, webElement));
+        }
+        textList = getRadioButtonText(radioButtonList);
+    }
+
+    public RadioButton(WebDriver driver, WebElement element) {
+        this.element = new UIElement(driver, element);
+        this.driver = driver;
+        for (WebElement webElement : driver.findElements(By.name("suite_mode"))) {
             radioButtonList.add(new UIElement(driver, webElement));
         }
         textList = getRadioButtonText(radioButtonList);

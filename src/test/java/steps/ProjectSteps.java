@@ -9,6 +9,7 @@ import pages.AddProjectPage;
 import pages.ProjectsPage;
 import wrappers.Button;
 import wrappers.CheckBox;
+import wrappers.RadioButton;
 
 import java.util.List;
 
@@ -36,16 +37,17 @@ public class ProjectSteps extends BaseStep {
         if (project.isShowAnnouncement()) {
             checkBox.selectCheckbox();
         }
+        RadioButton radioButton = new RadioButton(browsersService.getDriver(), addProjectPage.radioButton);
         if (project.getProjectType() != null) {
             switch (project.getProjectType().toString()) {
                 case "SINGLE_FOR_ALL_CASES":
-                    addProjectPage.radioButton().selectByValue(1);
+                    radioButton.selectByValue(1);
                     break;
                 case "SINGLE_FOR_ALL_BASELINE":
-                    addProjectPage.radioButton().selectByValue(2);
+                    radioButton.selectByValue(2);
                     break;
                 case "MULTIPLE":
-                    addProjectPage.radioButton().selectByValue(3);
+                    radioButton.selectByValue(3);
                     break;
             }
         }
@@ -65,22 +67,23 @@ public class ProjectSteps extends BaseStep {
         CheckBox checkBox = new CheckBox(browsersService.getDriver(), editProject.showAnnouncement);
         switch (Boolean.toString(project.isShowAnnouncement())) {
             case "true":
-                checkBox.selectCheckbox();
             case "false":
-                checkBox.selectCheckbox();
+                if (project.isShowAnnouncement() != checkBox.checkboxOnOrOff()) {
+                    checkBox.selectCheckbox();
+                }
+                break;
         }
-
+        RadioButton radioButton = new RadioButton(browsersService.getDriver(), editProject.radioButton);
         if (project.getProjectType() != null) {
             switch (project.getProjectType().toString()) {
                 case "SINGLE_FOR_ALL_CASES":
-                    editProject.radioButton().selectByValue(1);
+                    radioButton.selectByValue(1);
                     break;
                 case "SINGLE_WITH_BASELINE":
-                    editProject.radioButton().selectByValue(2);
+                    radioButton.selectByValue(2);
                     break;
                 case "MULTIPLE":
-                    editProject.
-                            radioButton().selectByValue(3);
+                    radioButton.selectByValue(3);
                     break;
             }
         }
@@ -97,7 +100,7 @@ public class ProjectSteps extends BaseStep {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            CheckBox checkBox = projectsPage.getCheckbox();
+            CheckBox checkBox = new CheckBox(browsersService.getDriver(), projectsPage.dialogCheckbox);
             checkBox.selectCheckbox();
 
             try {
@@ -105,7 +108,7 @@ public class ProjectSteps extends BaseStep {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Button acceptButton = projectsPage.getAcceptDialog();
+            Button acceptButton = new Button(browsersService.getDriver(), projectsPage.dialogAccept);
             acceptButton.click();
         }
     }

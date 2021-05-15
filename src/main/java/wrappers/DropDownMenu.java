@@ -25,6 +25,16 @@ public class DropDownMenu {
         }
     }
 
+    public DropDownMenu(WebDriver driver, WebElement by) {
+        this.driver = driver;
+        this.element = new UIElement(driver, by);
+        this.jsExecutor = (JavascriptExecutor) driver;
+        for (WebElement webElement : element.findElements(By.tagName("a"))) {
+            TableRow tableRow = new TableRow(driver, webElement);
+            rowsList.add(tableRow);
+        }
+    }
+
     private List<String> getDropDownMenuText(List<TableRow> dropList) {
         List<String> result = new ArrayList<>();
         for (TableRow element : dropList) {

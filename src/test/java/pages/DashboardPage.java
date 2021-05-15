@@ -2,16 +2,13 @@ package pages;
 
 import baseEntities.BasePage;
 import core.BrowsersService;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class DashboardPage extends BasePage {
     private static String END_POINT = "index.php?/dashboard";
-    private static final By dropDownMenuBy = By.id("helpDropdown");
-
-    protected static final By sidebarProjectsAddButtonBy = By.id("sidebar-projects-add");
-
-    protected static final String product = "//h1[text = 'remove']";
+    @FindBy(id = "sidebar-projects-add")
+    public WebElement sidebarProjectsAddButton;
 
     public DashboardPage(BrowsersService browsersService, boolean openPageByUrl) {
         super(browsersService, openPageByUrl);
@@ -25,17 +22,9 @@ public class DashboardPage extends BasePage {
     @Override
     public boolean isPageOpened() {
         try {
-            return getSidebarProjectsAddButton().isDisplayed();
+            return sidebarProjectsAddButton.isDisplayed();
         } catch (Exception ex) {
             return false;
         }
-    }
-
-    public WebElement getSidebarProjectsAddButton() {
-        return driver.findElement(sidebarProjectsAddButtonBy);
-    }
-
-    public WebElement getProduct(String text) {
-        return driver.findElement(By.xpath(product.replace("remove", text)));
     }
 }

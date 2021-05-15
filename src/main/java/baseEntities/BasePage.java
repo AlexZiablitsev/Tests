@@ -3,6 +3,8 @@ package baseEntities;
 import core.BrowsersService;
 import core.ReadProperties;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public abstract class BasePage {
@@ -10,8 +12,11 @@ public abstract class BasePage {
     protected WebDriver driver;
     protected BrowsersService browsersService;
     public String baseUrl;
+    @FindBy(id = "helpDropdown")
+    public static WebElement dropDownMenu;
 
     protected abstract void openPage();
+
     public abstract boolean isPageOpened();
 
     public BasePage(BrowsersService browsersService, boolean openPageByUrl) {

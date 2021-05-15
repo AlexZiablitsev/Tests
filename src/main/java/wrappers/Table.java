@@ -19,4 +19,12 @@ public class Table {
             rowsList.add(tableRow);
         }
     }
+
+    public Table(WebDriver webDriver, WebElement element) {
+        this.element = new UIElement(webDriver, element);
+        for (WebElement webElement : element.findElements(By.tagName("tr"))) {
+            TableRow tableRow = new TableRow(webDriver, webElement);
+            rowsList.add(tableRow);
+        }
+    }
 }
